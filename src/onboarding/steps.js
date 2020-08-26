@@ -87,7 +87,7 @@ const allSteps = [
     question: `
 Our community is commited to certain standards of behavior and we enforce that behavior to ensure it's a nice place to spend time.
 
-Please read about our code of conduct here: https://kentcdodds.com/conduct
+Please read about our code of conduct here: https://openqualityconf.com/coc/
 
 Do you agree to abide by and uphold the code of conduct? **The only correct answer is "yes"**
     `.trim(),
@@ -113,7 +113,7 @@ Do you agree to abide by and uphold the code of conduct? **The only correct answ
         response === answers.email
           ? `Please note, I'm not looking for *your* email address again. I'm looking for the email address that's listed in the code of conduct`
           : ''
-      if (!response.toLowerCase().includes('team@kentcdodds.com')) {
+      if (!response.toLowerCase().includes('conduct@openqualityconf.com')) {
         const mainMessage = `That's not right. Please **open the code of conduct** to find out. You're looking for the email address listed under the heading "Have questions/need to report an issue?" We take our code of conduct seriously, so I want to make sure you've opened it. Thanks!`
         return `${mainMessage} ${sameEmail}`
       }
@@ -134,9 +134,9 @@ If you'd like to change any, then edit your responses above.
     `.trim(),
     isQuestionMessage: messageContents =>
       /^Here are your answers/.test(messageContents),
-    feedback: `Awesome, welcome to the KCD Community on Discord!`,
+    feedback: `Awesome, welcome to the OQConf Community on Discord!`,
     getAnswer: messageContents =>
-      /^Awesome, welcome to the KCD/.test(messageContents) ? true : null,
+      /^Awesome, welcome to the OQConf/.test(messageContents) ? true : null,
     action: async ({answers, member, channel, isEdit}) => {
       const {guild} = member
       const send = getSend(channel)
@@ -268,142 +268,142 @@ ${isEdit ? '' : `🎊 You now have access to the whole server. Welcome!`}
       // all the reactions.
       await sleep(2000)
     },
-  },
-  {
-    name: 'liveStream',
-    question: (answers, member) => {
-      const kentLiveChannel = member.guild.channels.cache.find(
-        ({name, type}) =>
-          name.toLowerCase().includes('kent-live') && type === 'text',
-      )
+//   },
+//   {
+//     name: 'liveStream',
+//     question: (answers, member) => {
+//       const kentLiveChannel = member.guild.channels.cache.find(
+//         ({name, type}) =>
+//           name.toLowerCase().includes('kent-live') && type === 'text',
+//       )
 
-      return `Would you like to be notified when Kent starts live streaming in ${kentLiveChannel}?`
-    },
-    isQuestionMessage: messageContents =>
-      /Would you like to be notified when Kent starts live streaming/.test(
-        messageContents,
-      ),
-    feedback: answers => {
-      return answers.liveStream?.toLowerCase() === 'yes'
-        ? `Cool, when Kent starts live streaming, you'll get notified.`
-        : `Ok, you won't be notified when Kent starts live streaming.`
-    },
-    action: async ({answers, member}) => {
-      if (answers.liveStream !== 'yes') return
+//       return `Would you like to be notified when Kent starts live streaming in ${kentLiveChannel}?`
+//     },
+//     isQuestionMessage: messageContents =>
+//       /Would you like to be notified when Kent starts live streaming/.test(
+//         messageContents,
+//       ),
+//     feedback: answers => {
+//       return answers.liveStream?.toLowerCase() === 'yes'
+//         ? `Cool, when Kent starts live streaming, you'll get notified.`
+//         : `Ok, you won't be notified when Kent starts live streaming.`
+//     },
+//     action: async ({answers, member}) => {
+//       if (answers.liveStream !== 'yes') return
 
-      await member.roles.add(
-        member.guild.roles.cache.find(
-          ({name}) => name.toLowerCase() === 'notify: kent live',
-        ),
-        'Requested by user during onboarding',
-      )
-    },
-    getAnswer: messageContents => {
-      return /^Cool, when Kent starts live streaming/i.test(messageContents)
-        ? 'yes'
-        : /^Ok, you won't be notified when Kent starts live streaming/.test(
-            messageContents,
-          )
-        ? 'no'
-        : null
-    },
-    validate(response) {
-      if (!['yes', 'no'].includes(response.toLowerCase())) {
-        return `You must answer "yes" or "no": Would you like to be notified when Kent starts live streaming?`
-      }
-    },
-  },
-  {
-    name: 'officeHours',
-    question: (answers, member) => {
-      const officeHoursChannel = member.guild.channels.cache.find(
-        ({name, type}) =>
-          name.toLowerCase().includes('office-hours') && type === 'text',
-      )
+//       await member.roles.add(
+//         member.guild.roles.cache.find(
+//           ({name}) => name.toLowerCase() === 'notify: kent live',
+//         ),
+//         'Requested by user during onboarding',
+//       )
+//     },
+//     getAnswer: messageContents => {
+//       return /^Cool, when Kent starts live streaming/i.test(messageContents)
+//         ? 'yes'
+//         : /^Ok, you won't be notified when Kent starts live streaming/.test(
+//             messageContents,
+//           )
+//         ? 'no'
+//         : null
+//     },
+//     validate(response) {
+//       if (!['yes', 'no'].includes(response.toLowerCase())) {
+//         return `You must answer "yes" or "no": Would you like to be notified when Kent starts live streaming?`
+//       }
+//     },
+//   },
+//   {
+//     name: 'officeHours',
+//     question: (answers, member) => {
+//       const officeHoursChannel = member.guild.channels.cache.find(
+//         ({name, type}) =>
+//           name.toLowerCase().includes('office-hours') && type === 'text',
+//       )
 
-      return `Would you like to be notified when Kent starts https://kcd.im/office-hours in ${officeHoursChannel}?`
-    },
-    isQuestionMessage: messageContents =>
-      /kcd.im\/office-hours/.test(messageContents),
-    feedback: answers => {
-      return answers.officeHours?.toLowerCase() === 'yes'
-        ? `Great, you'll be notified when Kent's Office Hours start.`
-        : `No worries, you won't be notified about Kent's Office Hours.`
-    },
-    action: async ({answers, member}) => {
-      if (answers.officeHours !== 'yes') return
+//       return `Would you like to be notified when Kent starts https://kcd.im/office-hours in ${officeHoursChannel}?`
+//     },
+//     isQuestionMessage: messageContents =>
+//       /kcd.im\/office-hours/.test(messageContents),
+//     feedback: answers => {
+//       return answers.officeHours?.toLowerCase() === 'yes'
+//         ? `Great, you'll be notified when Kent's Office Hours start.`
+//         : `No worries, you won't be notified about Kent's Office Hours.`
+//     },
+//     action: async ({answers, member}) => {
+//       if (answers.officeHours !== 'yes') return
 
-      await member.roles.add(
-        member.guild.roles.cache.find(
-          ({name}) => name.toLowerCase() === 'notify: office hours',
-        ),
-        'Requested by user during onboarding',
-      )
-    },
-    getAnswer: messageContents => {
-      return /^Great, you'll be notified when Kent's Office Hours start./i.test(
-        messageContents,
-      )
-        ? 'yes'
-        : /^No worries, you won't be notified about Kent's Office Hours./.test(
-            messageContents,
-          )
-        ? 'no'
-        : null
-    },
-    validate(response) {
-      if (!['yes', 'no'].includes(response.toLowerCase())) {
-        return `You must answer "yes" or "no": Would you like to be notified when Kent starts office hours?`
-      }
-    },
-  },
-  {
-    name: 'avatar',
-    question: async answers => {
-      let message = `It's more fun here when folks have an avatar. You can go ahead and set yours now 😄`
-      try {
-        const emailHash = md5(answers.email)
-        const image = `https://www.gravatar.com/avatar/${emailHash}?s=128&d=404`
-        await memGot(image)
-        message = `
-${message}
+//       await member.roles.add(
+//         member.guild.roles.cache.find(
+//           ({name}) => name.toLowerCase() === 'notify: office hours',
+//         ),
+//         'Requested by user during onboarding',
+//       )
+//     },
+//     getAnswer: messageContents => {
+//       return /^Great, you'll be notified when Kent's Office Hours start./i.test(
+//         messageContents,
+//       )
+//         ? 'yes'
+//         : /^No worries, you won't be notified about Kent's Office Hours./.test(
+//             messageContents,
+//           )
+//         ? 'no'
+//         : null
+//     },
+//     validate(response) {
+//       if (!['yes', 'no'].includes(response.toLowerCase())) {
+//         return `You must answer "yes" or "no": Would you like to be notified when Kent starts office hours?`
+//       }
+//     },
+//   },
+//   {
+//     name: 'avatar',
+//     question: async answers => {
+//       let message = `It's more fun here when folks have an avatar. You can go ahead and set yours now 😄`
+//       try {
+//         const emailHash = md5(answers.email)
+//         const image = `https://www.gravatar.com/avatar/${emailHash}?s=128&d=404`
+//         await memGot(image)
+//         message = `
+// ${message}
 
-I got this image using your email address with gravatar.com. You can use it for your avatar if you like.
+// I got this image using your email address with gravatar.com. You can use it for your avatar if you like.
 
-${image}
-        `.trim()
-      } catch (error) {
-        // ignore the error
-      }
-      return `
-${message}
+// ${image}
+//         `.trim()
+//       } catch (error) {
+//         // ignore the error
+//       }
+//       return `
+// ${message}
 
-Here's how you set your avatar: https://support.discord.com/hc/en-us/articles/204156688-How-do-I-change-my-avatar-
+// Here's how you set your avatar: https://support.discord.com/hc/en-us/articles/204156688-How-do-I-change-my-avatar-
 
-**When you're finished (or if you'd like to just move on), just say "done"**
-      `.trim()
-    },
-    isQuestionMessage: messageContents =>
-      /^Here's how you set your avatar/.test(messageContents),
-    feedback: (answers, member) => {
-      return member.user.avatar
-        ? `Great, thanks for adding your avatar.`
-        : `Ok, please do set your avatar later though. It helps keep everything human.`
-    },
-    shouldSkip: member => Boolean(member.user.avatar),
-    getAnswer: messageContents => {
-      if (/adding your avatar/i.test(messageContents)) return 'ADDED'
-      if (/set your avatar later/i.test(messageContents)) return 'SKIPPED'
+// **When you're finished (or if you'd like to just move on), just say "done"**
+//       `.trim()
+//     },
+//     isQuestionMessage: messageContents =>
+//       /^Here's how you set your avatar/.test(messageContents),
+//     feedback: (answers, member) => {
+//       return member.user.avatar
+//         ? `Great, thanks for adding your avatar.`
+//         : `Ok, please do set your avatar later though. It helps keep everything human.`
+//     },
+//     shouldSkip: member => Boolean(member.user.avatar),
+//     getAnswer: messageContents => {
+//       if (/adding your avatar/i.test(messageContents)) return 'ADDED'
+//       if (/set your avatar later/i.test(messageContents)) return 'SKIPPED'
 
-      return null
-    },
-    validate(response) {
-      if (response.toLowerCase() !== 'done') {
-        return `Reply "done" when you're ready to continue.`
-      }
-    },
-  },
-  {
+//       return null
+//     },
+//     validate(response) {
+//       if (response.toLowerCase() !== 'done') {
+//         return `Reply "done" when you're ready to continue.`
+//       }
+//     },
+//   },
+//   {
     name: 'finished',
     question: (answers, member) => {
       const introChannel = member.guild.channels.cache.find(
